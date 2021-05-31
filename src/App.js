@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import ContactForm from './components/ContactForm'
 import ContactList from './components/ContactList'
@@ -8,26 +8,30 @@ import Filter from './components/Filter'
 import { fetchContacts } from './redux/contacts/contacts-operations';
 import { getItems } from './redux/contacts/contacts-selectors';
 
-function App({ items }) {
+class App extends Component {
+  componentDidMount() {
+    this.props.fetchItems();
+  }
+  render() {
+    return (
+      <>
+        <h1>Phonebook</h1>
+        <ContactForm/>
+        <h2>Contacts</h2>
   
-  return (
-    <>
-      <h1>Phonebook</h1>
-      <ContactForm/>
-      <h2>Contacts</h2>
-
-      {items.length > 0 ? (
-        <>
-          <Filter />
-          <ContactList>
-            <ContactItem />
-          </ContactList>
-        </>
-      ) : (
-        <span>You have no contacts!</span>
-      )}
-    </>
-  )
+        {this.props.items.length > 0 ? (
+          <>
+            <Filter />
+            <ContactList>
+              <ContactItem />
+            </ContactList>
+          </>
+        ) : (
+          <span>You have no contacts!</span>
+        )}
+      </>
+    )
+  }
 };
 
 /* const mapStateToProps = state => ({
