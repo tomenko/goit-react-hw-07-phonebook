@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deleteContact, getFilteredContactList } from '../../redux/contacts';
 
-const ContactItem = ({ onDeleteContact, contactsItems }) => (
+const ContactItem = ({ onDelete, contactsItems }) => (
   <>
     {contactsItems.map(({ id, name, number }) => {
       return (
         <li key={id}>
           <p>{`${name}: ${number}`}</p>
-          <button type="button" onClick={() => onDeleteContact(id)}>
+          <button type="button" onClick={() => onDelete(id)}>
             Delete
           </button>
         </li>
@@ -16,16 +16,6 @@ const ContactItem = ({ onDeleteContact, contactsItems }) => (
     })}
   </>
 );
-
-
-/* const getCurrentContacts = (allContacts, filter) => {
-  const regExp = new RegExp(filter, 'gi');
-
-  if (filter) {
-    return allContacts.filter(contact => regExp.test(contact.name));
-  }
-  return allContacts;
-}; */
 
 const mapStateToProps = state => ({
   contactsItems: getFilteredContactList(state),
@@ -45,5 +35,5 @@ ContactItem.propTypes = {
       number: PropTypes.string.isRequired,
     }),
   ),
-  onDeleteContact: PropTypes.func,
+  onDelete: PropTypes.func,
 };
